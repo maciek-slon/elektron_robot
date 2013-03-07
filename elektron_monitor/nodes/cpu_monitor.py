@@ -93,7 +93,11 @@ def cpu_monitor():
             usage = 100.0 * (diff_total - diff_idle) / diff_total
             
             cur_freq = float(freqs[id].split(":")[1])
-            max_freq = float(open("/sys/devices/system/cpu/"+cpuname+"/cpufreq/cpuinfo_max_freq", "r").readlines()[0]) / 1000
+            max_freq = cur_freq;
+            try:
+                max_freq = float(open("/sys/devices/system/cpu/"+cpuname+"/cpufreq/cpuinfo_max_freq", "r").readlines()[0]) / 1000
+            except IOError:
+                pass
             
             # CPU info                                                                                                                              
             stat = diagnostic_msgs.msg.DiagnosticStatus()
